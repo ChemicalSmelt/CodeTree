@@ -15,6 +15,8 @@ class NodeController extends Controller
     public function index()
     {
         //
+        //return 'Hello, world!';
+        return view('nodes.index');
     }
 
     /**
@@ -36,6 +38,13 @@ class NodeController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+        ]);
+
+        $request->user()->nodes()->create($validated);
+
+        return redirect(route('nodes.index'));
     }
 
     /**

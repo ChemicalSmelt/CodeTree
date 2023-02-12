@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class node extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'message',
+    ];
 }
