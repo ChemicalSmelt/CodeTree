@@ -16,7 +16,10 @@ class NodeController extends Controller
     {
         //
         //return 'Hello, world!';
-        return view('nodes.index');
+        //return view('nodes.index');
+        return view('nodes.index',[
+            'nodes' => Node::with('user')->latest()->get(),
+        ]);
     }
 
     /**
@@ -67,6 +70,11 @@ class NodeController extends Controller
     public function edit(node $node)
     {
         //
+        $this->authorize('update', $node);
+
+        return view('nodes.edit',[
+            'node' => $node,
+        ]);
     }
 
     /**
@@ -79,6 +87,15 @@ class NodeController extends Controller
     public function update(Request $request, node $node)
     {
         //
+        $this->authorize('update', $node);
+
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+        ]);
+
+        $node->update($validated);
+
+        return redirect(route('nodes.index'));
     }
 
     /**
@@ -90,5 +107,10 @@ class NodeController extends Controller
     public function destroy(node $node)
     {
         //
+        $this->authorize('delete', $node);
+
+        $node->delete();
+
+        return redirect(route('nodes.index'));
     }
 }

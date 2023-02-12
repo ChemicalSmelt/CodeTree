@@ -12,4 +12,9 @@ class node extends Model
     protected $fillable = [
         'message',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
