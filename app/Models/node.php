@@ -5,12 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Events\nodeCreated;
+
 class node extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'message',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => nodeCreated::class,
     ];
 
     public function user()
